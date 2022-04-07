@@ -68,6 +68,14 @@ class _MyHomePageState extends State<MyHomePage> {
     _streamController = StreamController();
     _stream = _streamController.stream;
   }
+  String firstUpperCase(String str)
+  {
+    String a = str.substring(0,1);
+    a = a.toUpperCase();
+    String b = str.substring(1);
+
+    return a+b;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -147,38 +155,39 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: <Widget>[
                       Container(
                         color: Colors.grey[300],
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Defination()
-                                )
-                            );
-                          },
-                          child: ListTile(
-                            leading: snapshot.data["definitions"][index]["image_url"] == null
-                                ? null
-                                : Image.network(snapshot.data["definitions"][index]["image_url"],height: 120,),
-                            /*CircleAvatar(
-                              backgroundImage: NetworkImage(snapshot.data["definitions"][index]["image_url"]),
-                            ),*/
-                            title: Text(_controller.text.trim() + " (" + snapshot.data["definitions"][index]["type"] + ")"),
-                          ),
+                        child: ListTile(
+                          leading: snapshot.data["definitions"][index]["image_url"] == null
+                              ? null
+                              : Image.network(snapshot.data["definitions"][index]["image_url"],height: 120,),
+                          title: Text(_controller.text.trim() + " (" + snapshot.data["definitions"][index]["type"] + ")",style: const TextStyle(fontSize: 18),),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text("Definition :\n" + snapshot.data["definitions"][index]["definition"]),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text("Definition :",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0,bottom: 8.0),
+                            child: Text(firstUpperCase(snapshot.data["definitions"][index]["definition"]),
+                              style: const TextStyle(fontSize: 16),),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.only(top: 8.0, left: 8.0),
+                             child: Text("Example :",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                          ),
+                        ],
                       ),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 8.0, left: 8.0,),
-                        child: Text("Example :\n"),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0, bottom: 4.0),
-                        child: Text(snapshot.data["definitions"][index]["example"]),
-                      ),
+                      ListTile(
+                        leading: snapshot.data["definitions"][index]["example"] == null
+                            ? null
+                            :Padding(
+                          padding: const EdgeInsets.only(bottom: 4.0),
+                          child: Text(firstUpperCase(snapshot.data["definitions"][index]["example"]),style: const TextStyle(fontSize: 16),),
+                        ),
+                      )
                     ],
                   ),
                 );
