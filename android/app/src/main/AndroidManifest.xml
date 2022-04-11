@@ -2,7 +2,7 @@
     package="com.example.mini_dictionary">
     <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="mini_dictionary"
+        android:label="Mini Dictionary"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
