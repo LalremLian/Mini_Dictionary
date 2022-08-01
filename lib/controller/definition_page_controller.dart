@@ -44,7 +44,9 @@ class DefinitionPageController extends GetxController {
           snackPosition: SnackPosition.BOTTOM,
           duration: const Duration(milliseconds: 2000),
           forwardAnimationCurve: Curves.easeOutBack);
+
       isLoaded(false);
+      definitionList.clear();
     }
 
 /*    print("Controller -----------");
