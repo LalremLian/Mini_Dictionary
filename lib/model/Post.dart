@@ -22,7 +22,7 @@ class Post {
   factory Post.fromJson(Map<String, dynamic> json) => Post(
     definitions: List<Definition>.from(json["definitions"].map((x) => Definition.fromJson(x))),
     word: json["word"],
-    pronunciation: json["pronunciation"],
+    pronunciation: (json["pronunciation"] == null? "": json["pronunciation"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -50,9 +50,9 @@ class Definition {
   factory Definition.fromJson(Map<String, dynamic> json) => Definition(
     type: json["type"],
     definition: json["definition"],
-    example: json["example"],
-    imageUrl: json["image_url"],
-    emoji: json["emoji"],
+    example: (json["example"] == null? "": json["example"]),
+    imageUrl: (json["image_url"] == null? "": json["image_url"]),
+    emoji: (json["emoji"] == null? "": json["emoji"]),
   );
 
   Map<String, dynamic> toJson() => {
