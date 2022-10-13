@@ -52,6 +52,8 @@ dev_dependencies:
   double_back_to_close_app: ^2.1.0
   get: ^4.6.4
 
+  google_mobile_ads: ^1.2.0
+
 
 
 flutter_icons:

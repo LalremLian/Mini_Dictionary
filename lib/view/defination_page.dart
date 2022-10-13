@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mini_dictionary/widget/drawer_widget.dart';
 import '../controller/definition_page_controller.dart';
 import 'package:lottie/lottie.dart';
 
@@ -8,21 +9,100 @@ import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 class Definition extends StatelessWidget {
   Definition({Key? key}) : super(key: key);
 
+  var scaffoldKey = GlobalKey<ScaffoldState>();
   //late Stream stream;
   final definitionPageController = Get.find<DefinitionPageController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
+      drawer: const DrawerWidget(),
       appBar: AppBar(
+        title: const Text('Mini Dictionary'),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.menu_rounded,
+            // color: Colors.red,
+            size: 30, // Changing Drawer Icon Size
+          ),
+          onPressed: () {
+            if(scaffoldKey.currentState!.isDrawerOpen){
+              scaffoldKey.currentState!.closeDrawer();
+              //close drawer, if drawer is open
+            }else{
+              scaffoldKey.currentState!.openDrawer();
+              //open drawer, if drawer is closed
+            }
+          },
+          tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+        ),
+
+
+        /*actions: [
+*//*          IconButton(
+            icon: const Icon(
+              Icons.menu,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              const DrawerWidget();
+            },
+          ),*//*
+
+          Container(
+            width: 250.0,
+            margin: const EdgeInsets.only(bottom: 8.0, top: 8.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(24.0),
+            ),
+            child: TextFormField(
+              //.................................Search Action In keyboard
+              style: const TextStyle(fontSize: 18),
+              textInputAction: TextInputAction.search,
+              controller: definitionPageController.editingController,
+              decoration: const InputDecoration(
+                hintText: "Search for a word",
+                contentPadding: EdgeInsets.only(left: 24.0,bottom: 8.0),
+                border: InputBorder.none,
+              ),
+              onFieldSubmitted: (value) {
+                definitionPageController.getDefinition(value);
+              },
+*//*                    onChanged: (String value) {
+                      if (definitionPageController.debounce.isActive) {
+                        definitionPageController.debounce.cancel();
+                      }
+                      definitionPageController.debounce =
+                          Timer(const Duration(milliseconds: 1000), () {
+                        definitionPageController.search(value);
+                      });
+                    },*//*
+            ),
+          ),
+
+          IconButton(
+            icon: const Icon(
+              Icons.search,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              String a = definitionPageController.editingController.text;
+              definitionPageController.getDefinition(a);
+            },
+          )
+        ],*/
         backgroundColor: const Color.fromRGBO(4, 66, 113, 1),
-        title: const Center(child: Text("Mini Dictionary")),
+        // title: const Text("Mini Dictionary"),
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(48.0),
+          preferredSize: const Size.fromHeight(40.0),
           child: Row(
             children: <Widget>[
+
               Expanded(
                 child: Container(
+                  height: 40,
                   margin: const EdgeInsets.only(left: 12.0, bottom: 8.0),
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -34,7 +114,7 @@ class Definition extends StatelessWidget {
                     controller: definitionPageController.editingController,
                     decoration: const InputDecoration(
                       hintText: "Search for a word",
-                      contentPadding: EdgeInsets.only(left: 24.0),
+                      contentPadding: EdgeInsets.only(left: 24.0,bottom: 8.0),
                       border: InputBorder.none,
                     ),
                     onFieldSubmitted: (value) {
@@ -53,15 +133,18 @@ class Definition extends StatelessWidget {
                 ),
               ),
               //.....................................................Search Icon
-              IconButton(
-                icon: const Icon(
-                  Icons.search,
-                  color: Colors.white,
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.search,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    String a = definitionPageController.editingController.text;
+                    definitionPageController.getDefinition(a);
+                  },
                 ),
-                onPressed: () {
-                  String a = definitionPageController.editingController.text;
-                  definitionPageController.getDefinition(a);
-                },
               )
             ],
           ),
@@ -106,8 +189,7 @@ class Definition extends StatelessWidget {
                           color: Colors.grey[300],
                           child: ListTile(
                             leading: definitionPageController.definitionList[index].definition == null
-                                ? null
-                                : Image.network(definitionPageController.definitionList[index].imageUrl,
+                                ? null : Image.network(definitionPageController.definitionList[index].imageUrl,
                                     errorBuilder: (context, error, stackTrace) {
                                     return const SizedBox(
                                         height: 400, child: Text(''));

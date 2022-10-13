@@ -5,6 +5,11 @@
         android:label="Mini Dictionary"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+
+       <meta-data
+           android:name="com.google.android.gms.ads.APPLICATION_ID"
+           android:value="ca-app-pub-9980622067720306~8263056951"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
