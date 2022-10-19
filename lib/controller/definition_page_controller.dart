@@ -1,9 +1,14 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mini_dictionary/model/Post.dart';
 import 'package:mini_dictionary/service/remote_services.dart';
+
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+
+import '../ad_helper.dart';
 
 class DefinitionPageController extends GetxController {
   late TextEditingController editingController;
@@ -18,6 +23,7 @@ class DefinitionPageController extends GetxController {
   void onInit() {
     super.onInit();
     editingController = TextEditingController();
+    initBannerAd();
   }
 
   Future<void> getDefinition(String value) async {
@@ -35,11 +41,10 @@ class DefinitionPageController extends GetxController {
 
     var response = await RemoteService().getSearchData(value);
 
-    if(response != null)
-      {
-        definitionList.value = response.definitions;
-        isLoaded(false);
-      }else{
+    if (response != null) {
+      definitionList.value = response.definitions;
+      isLoaded(false);
+    } else {
       Get.snackbar("Definition not found.", "",
           snackPosition: SnackPosition.BOTTOM,
           duration: const Duration(milliseconds: 2000),
@@ -64,7 +69,6 @@ class DefinitionPageController extends GetxController {
 
   String checkIfNull(String str) {
     if (str != '') {
-
       String a = str.substring(0, 1);
 
       a = a.toUpperCase();
@@ -80,6 +84,34 @@ class DefinitionPageController extends GetxController {
       str = "Example : ";
     }
     return str;
+  }
+
+  late BannerAd bannerAd;
+  var isAdLoaded = false.obs;
+
+  void initBannerAd() {
+    print('Ad Caleed --');
+    // isAdLoaded(true);
+    bannerAd = BannerAd(
+        size: AdSize.banner,
+        // adUnitId: 'ca-app-pub-9980622067720306/1073776155',
+        // adUnitId: BannerAd.testAdUnitId,
+        adUnitId: AdHelper.bannerAdUnitId,
+        listener: BannerAdListener(
+          onAdLoaded: (ad) {
+
+            isAdLoaded(true);
+          },
+          onAdFailedToLoad: (ad, error){
+            if (kDebugMode) {
+              print('Failed to load a banner ad: ${error.message}');
+            }
+            ad.dispose();
+          }
+        ),
+        request: AdRequest());
+
+    bannerAd.load();
   }
 }
 

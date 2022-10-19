@@ -25,17 +25,17 @@ class DrawerWidget extends StatelessWidget {
           Expanded(
             child: Column(
               children: [
-                ListTile(
+/*                ListTile(
                   leading: const Icon(Icons.rss_feed),
                   title: const Text("Feed"),
                   onTap: () {
                     Get.toNamed("/iconChangerScreen");
                   },
-                ),
+                ),*/
 
                 ListTile(
                   leading: const Icon(Icons.info_outline_rounded),
-                  title: const Text("About Us"),
+                  title: const Text("About"),
                   onTap: () {
                     Get.toNamed("/aboutUsScreen");
                   },
@@ -47,7 +47,7 @@ class DrawerWidget extends StatelessWidget {
             alignment: Alignment.bottomRight,
               child: Padding(
                 padding: EdgeInsets.all(8.0),
-                child: Text('VERSION 1.0',
+                child: Text('VERSION 1.0.0',
                   style: TextStyle(fontSize: 8.0),),
               ))
         ],
