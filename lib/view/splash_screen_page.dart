@@ -1,10 +1,14 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:get/get.dart';
+import 'package:mini_dictionary/controller/splash_screen_controller.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  SplashScreenController splashScreenController = Get.put(SplashScreenController());
+
+  SplashScreen({Key? key}) : super(key: key){
+    splashScreenController.checkLogin();
+  }
 
   @override
   SplashScreenState createState() => SplashScreenState();
@@ -13,11 +17,7 @@ class SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 3),
-            ()=> {
-      Get.offAllNamed('/definitionScreen')
-            }
-    );
+
   }
   @override
   Widget build(BuildContext context) {
