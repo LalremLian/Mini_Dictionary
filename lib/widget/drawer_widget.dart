@@ -11,16 +11,40 @@ class DrawerWidget extends StatelessWidget {
     return Drawer(
       child: Column(
         children: [
-          const UserAccountsDrawerHeader(
+          
+          Column(children: [
+            Container(
+              decoration: const BoxDecoration(
+                color: Color.fromRGBO(4, 76, 113, 1),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: const [
+                  Padding(
+                    padding: EdgeInsets.only(top: 55.0, left: 40.0),
+                    child: Image(image: AssetImage("assets/app_icon.png"),
+                      height: 60,alignment: Alignment.topLeft),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text("Mini Dictionary",
+                    style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),),
+                  )
+
+                ],
+              )
+            )
+          ],),
+/*          const UserAccountsDrawerHeader(
             decoration: BoxDecoration(
               color: Color.fromRGBO(4, 66, 113, 1),
             ),
-/*            currentAccountPicture: CircleAvatar(
-              foregroundImage: AssetImage("images/profile.png"),
-            ),*/
+            currentAccountPicture: CircleAvatar(
+              foregroundImage: AssetImage("assets/app_icon.png"),
+            ),
             accountName: Text("Mini Dictionary"),
-            accountEmail: Text("Lalrem Lian B. Tlung"),
-          ) ,
+            accountEmail: Text(""),
+          ) ,*/
 
           Expanded(
             child: Column(
